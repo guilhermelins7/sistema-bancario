@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -35,16 +36,34 @@ namespace Sistema_Bancario
 
         public void Depositar(decimal valor)
         {
-            if (valor > 0) Saldo += valor;
-            else throw new ArgumentException("O valor do depósito deve ser positivo");
+            try
+            {
+                if (valor <= 0) throw new ArgumentException(); ;
+
+                Saldo += valor;
+            }
+            catch (ArgumentException)
+            {
+                Console.WriteLine("O valor do depósito deve ser positivo");
+            }
         }
 
         public void Sacar(decimal valor)
         {
-            if (valor > Saldo) throw new InvalidOperationException("Saldo insuficiente.");
-            else Saldo -= valor;
+            try
+            {
+                if (valor > Saldo) throw new InvalidOperationException();
+                Saldo -= valor;
+            }
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("Saldo insuficiente.");
+            }
         }
 
-        // Implementar validador / criptografia de senha.
+        public bool ValidarSenha(string senha)
+        {
+            return Senha == senha;
+        }
     }
 }
