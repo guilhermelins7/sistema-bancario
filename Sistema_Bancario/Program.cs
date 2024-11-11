@@ -1,13 +1,6 @@
-﻿using Sistema_Bancario;
+﻿using SistemaBancario;
 
-var conta = Conta.Criar("1234", 90);
+Cliente cliente = new Cliente("Gabriel", "736.015.308-35");
 
-Console.WriteLine(conta.ChecarSaldo());
-
-conta.Depositar(0);
-
-Console.WriteLine(conta.ChecarSaldo());
-
-conta.Sacar(200);
-
-Console.WriteLine(conta.ChecarSaldo());
+Console.WriteLine(cliente.Nome);
+Console.WriteLine(cliente.CPF);

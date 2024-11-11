@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sistema_Bancario
+namespace SistemaBancario
 {
     internal class Conta
     {
         public int Numero { get; set; }
-        public decimal Saldo { get; set; }
+        private decimal Saldo { get; set; }
         private string Senha { get; set; }
         // Implementar método de cripotografia desenvolvido na disciplina de Arq. comp.
         //public Cliente Titular { get; private set; }
