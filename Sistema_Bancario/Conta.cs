@@ -13,6 +13,7 @@ namespace SistemaBancario
         public int Numero { get; set; }
         private decimal Saldo { get; set; }
         private string Senha { get; set; }
+        private List<Transacao> _historicoTransacao = new List<Transacao>();
         // Implementar método de cripotografia desenvolvido na disciplina de Arq. comp.
         //public Cliente Titular { get; private set; }
 
@@ -36,28 +37,28 @@ namespace SistemaBancario
 
         public void Depositar(decimal valor)
         {
-            try
-            {
-                if (valor <= 0) throw new ArgumentException(); ;
+            if (valor <= 0) throw new ArgumentException("O valor do depósito deve ser positivo");
 
-                Saldo += valor;
-            }
-            catch (ArgumentException)
-            {
-                Console.WriteLine("O valor do depósito deve ser positivo");
-            }
+            Saldo += valor;
+
+            _historicoTransacao.Add(new Transacao("deposito", valor));
         }
 
         public void Sacar(decimal valor)
         {
-            try
+            if (valor > Saldo) throw new InvalidOperationException("Saldo insuficiente.");
+
+            Saldo -= valor;
+
+            _historicoTransacao.Add(new Transacao("saque", valor));
+        }
+
+        public void Historico()
+        {
+            Console.WriteLine("Histórico de transações:");
+            foreach (var transacao in _historicoTransacao)
             {
-                if (valor > Saldo) throw new InvalidOperationException();
-                Saldo -= valor;
-            }
-            catch (InvalidOperationException)
-            {
-                Console.WriteLine("Saldo insuficiente.");
+                Console.WriteLine(transacao);
             }
         }
 
