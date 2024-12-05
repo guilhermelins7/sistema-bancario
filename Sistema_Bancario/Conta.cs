@@ -13,14 +13,14 @@ namespace SistemaBancario
         public int Numero { get; set; }
         private decimal Saldo { get; set; }
         private string Senha { get; set; }
+        public Cliente Titular { get; private set; }
         private List<Transacao> _historicoTransacao = new List<Transacao>();
         // Implementar método de cripotografia desenvolvido na disciplina de Arq. comp.
-        public Cliente Titular { get; private set; }
 
-        private Conta(Cliente titular, string senha, decimal depositoInicial)
+        public Conta(Cliente titular, string senha, decimal depositoInicial)
         {
             Titular = titular;
-            Senha = senha;
+            Senha = CriptografarSenha(senha);
             Saldo = depositoInicial;
         }
 
@@ -54,6 +54,62 @@ namespace SistemaBancario
             {
                 Console.WriteLine(transacao);
             }
+        }
+
+        // Algoritmo utilizado em Arq. de Comp.
+        private string CriptografarSenha(string senha)
+        {
+            senha = Reverter(senha);
+            senha = CifraDeCesar(senha);
+            senha = Criptografar(senha);
+
+            static string Reverter(string senha)
+            {
+                string resultado = "";
+
+                for (int index = senha.Length - 1; index >= 0; index--)
+                {
+                    resultado += senha[index];
+                }
+
+                return resultado;
+            }
+
+            static string CifraDeCesar(string senha)
+            {
+                string resultado = "";
+
+                for (int index = 0; index < senha.Length; index++) // Aplicação cifra de cesar
+                {
+                    int aux = (int)senha[index] + 3; // convertando para valor ASCII inteiro e adicionando + 3;
+                    resultado += (char)aux; // retornando para char e adicionando à string.
+                }
+
+                return resultado;
+            }
+
+            static string Criptografar(string senha)
+            {
+                string criptografia = "";
+                int aux;
+                int valor = 0;
+
+                for (int index = 0; index < senha.Length; index++)
+                {
+                    aux = (int)(senha[index] + (Math.Pow(2, valor) + 1)); // Aplicando função do TP.
+                    criptografia += (char)aux;
+                    valor++;
+
+                    if (valor == 3)
+                    {
+                        valor = 0;
+                    }
+                }
+
+                return criptografia;
+            }
+
+            return senha;
         }
 
         public bool ValidarSenha(string senha)
