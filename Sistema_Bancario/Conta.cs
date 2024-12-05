@@ -15,19 +15,13 @@ namespace SistemaBancario
         private string Senha { get; set; }
         private List<Transacao> _historicoTransacao = new List<Transacao>();
         // Implementar método de cripotografia desenvolvido na disciplina de Arq. comp.
-        //public Cliente Titular { get; private set; }
+        public Cliente Titular { get; private set; }
 
-        private Conta() { } // Garantir que a instanciação de nova classe seja feita através do método CriarConta.
-
-        public static Conta Criar(string senha, decimal depositoInicial)
+        private Conta(Cliente titular, string senha, decimal depositoInicial)
         {
-            // Adicionar método para criar novo número de conta do cliente e deposito inicial
-            return new Conta
-            {
-                // Implementar Criação automatica de numeração de conta.
-                Senha = senha,
-                Saldo = depositoInicial
-            };
+            Titular = titular;
+            Senha = senha;
+            Saldo = depositoInicial;
         }
 
         public decimal ChecarSaldo()
