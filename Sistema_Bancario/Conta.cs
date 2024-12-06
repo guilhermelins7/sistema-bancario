@@ -15,7 +15,6 @@ namespace SistemaBancario
         private string Senha { get; set; }
         public Cliente Titular { get; private set; }
         private List<Transacao> _historicoTransacao = new List<Transacao>();
-        // Implementar método de cripotografia desenvolvido na disciplina de Arq. comp.
 
         public Conta(Cliente titular, string senha, decimal depositoInicial)
         {
@@ -114,7 +113,8 @@ namespace SistemaBancario
 
         public bool ValidarSenha(string senha)
         {
-            return Senha == senha;
+            string senhaCriptografada = CriptografarSenha(senha);
+            return senhaCriptografada == Senha;
         }
     }
 }
