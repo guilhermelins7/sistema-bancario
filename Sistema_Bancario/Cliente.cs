@@ -7,19 +7,10 @@
 
         public Cliente(string nome, string cpf)
         {
-            try
-            {
-                if (ValidarCPF(cpf))
-                {
-                    Nome = nome;
-                    CPF = cpf;
-                }
-                else throw new Exception();
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("CPF informado é inválido");
-            }
+            if (!ValidarCPF(cpf)) throw new Exception("CPF informado é inválido");
+
+            Nome = nome;
+            CPF = cpf;
         }
 
         private bool ValidarCPF(string cpf)
