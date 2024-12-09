@@ -7,7 +7,8 @@
 
         public Cliente(string nome, string cpf)
         {
-            if (!ValidarCPF(cpf)) throw new Exception("CPF informado é inválido");
+            if (string.IsNullOrWhiteSpace(nome)) throw new ArgumentNullException();
+            if (!ValidarCPF(cpf)) throw new Exception("CPF ínformado é inválido");
 
             Nome = nome;
             CPF = cpf;
