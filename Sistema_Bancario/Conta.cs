@@ -8,6 +8,12 @@
         public Cliente Titular { get; private set; }
         private List<Transacao> _historicoTransacao = new List<Transacao>();
 
+        public Conta(Cliente titular, string senha)
+        {
+            Titular = titular;
+            Senha = CriptografarSenha(senha);
+        }
+
         public Conta(Cliente titular, string senha, decimal depositoInicial)
         {
             Titular = titular;
