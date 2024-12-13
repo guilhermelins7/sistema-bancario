@@ -24,7 +24,7 @@ while (clienteValido)
 
         clienteValido = false;
     }
-    catch(ArgumentNullException)
+    catch (ArgumentNullException)
     {
         Console.WriteLine("\nNome não pode ser vazio, tente novamente.");
     }
@@ -34,23 +34,31 @@ while (clienteValido)
     }
 }
 
-Console.WriteLine("Cliente criado com sucesso!\n");
+Console.WriteLine("\nCliente criado com sucesso!\n");
 
 Console.WriteLine("Agora,vamos criar uma conta.");
 
-// Criar conta
-Console.Write("Crie uma senha para a conta: ");
-string senha = Console.ReadLine();
+string senha;
+
+do
+{
+    Console.Write("Crie uma senha para a conta: ");
+    senha = Console.ReadLine();
+
+    if (senha == "") Console.WriteLine("Senha não pode estar em branco! tente novamente.");
+    else Console.WriteLine("Senha cadastrada com sucesso!\n");
+
+} while (senha == "");
 
 Conta conta = null;
 
 do
 {
-    Console.WriteLine("Deseja fazer um depósito inicial?");
+    Console.WriteLine("Deseja fazer um depósito inicial? (S/N)");
     string resp = Console.ReadLine();
-    if (resp == "S")
+    if (resp == "S" || resp == "s")
     {
-       Console.Write("Informe o valor do depósito inicial: ");
+        Console.Write("Informe o valor do depósito inicial: ");
 
         decimal depositoInicial;
 
@@ -61,14 +69,12 @@ do
 
         conta = new Conta(cliente, senha, depositoInicial);
     }
-    else if (resp == "N")
+    else if (resp == "N" || resp == "n")
     {
         conta = new Conta(cliente, senha);
     }
     else Console.WriteLine("Resposta inválida. use \"S\" ou \"N\"");
-} while (conta != null);
-
-Conta conta = new Conta(cliente, senha, depositoInicial);
+} while (conta == null);
 
 Console.WriteLine("Conta criada com sucesso!");
 
@@ -83,8 +89,10 @@ while (!sair)
     Console.WriteLine("4 - Ver Histórico de Transações");
     Console.WriteLine("5 - Sair");
     Console.Write("Opção: ");
-
+    
     string opcao = Console.ReadLine();
+
+    Console.WriteLine();
 
     switch (opcao)
     {
@@ -94,13 +102,16 @@ while (!sair)
 
         case "2":
             Console.Write("Digite o valor para depósito: ");
+
             decimal valorDeposito;
             while (!decimal.TryParse(Console.ReadLine(), out valorDeposito) || valorDeposito <= 0)
             {
                 Console.Write("Valor inválido. Tente novamente: ");
             }
-            conta.Depositar(valorDeposito);
+
+            conta!.Depositar(valorDeposito);
             Console.WriteLine("Depósito realizado com sucesso!");
+
             break;
 
         case "3":
@@ -110,19 +121,20 @@ while (!sair)
             {
                 Console.Write("Valor inválido. Tente novamente: ");
             }
+
             try
             {
-                conta.Sacar(valorSaque);
+                conta!.Sacar(valorSaque);
                 Console.WriteLine("Saque realizado com sucesso!");
             }
-            catch (InvalidOperationException ex)
+            catch (InvalidOperationException ex) // Exibir msg da exeção
             {
                 Console.WriteLine(ex.Message);
             }
             break;
 
         case "4":
-            conta.Historico();
+            conta!.Historico();
             break;
 
         case "5":
